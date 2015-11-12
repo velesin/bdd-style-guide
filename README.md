@@ -11,6 +11,8 @@
 
 ### SPEC ORGANIZATION
 
+* Describe a single concern per spec (beware conjunctions)
+
 ### SPEC IMPLEMENTATION
 
 ### EXPECTATIONS
@@ -157,3 +159,46 @@ describe("Array.push", function() {
 Incomplete spec names are misleading, especially if they are seemingly detailed and descriptive. They trick you to think that you understand system behavior while in reality important parts of this behavior remain hidden in the spec body.
 
 Also, revealing everything a spec does in its name is a great design tool, as it helps uncover a common spec smell: describing too many concerns in a single spec (see also "Describe a single concern per spec" rule).
+
+- - -
+
+## Describe a single concern per spec (beware conjunctions)
+
+Keep an eye on ANDs, ORs, etc. Such a complex spec name is usually a sign that the spec tries to describe many separate behaviors at once. Split such a spec into multiple, more focused specs, describing only one thing.
+
+### BAD
+
+```js
+describe("Array.push", function() {
+	it("adds elements to the end of an array and returns the new length of the array", function() {
+		//...
+	});
+});
+```
+
+### GOOD
+
+```js
+describe("Array.push", function() {
+	beforeEach(function() {
+		// a common setup for both specs	
+	});
+
+	it("adds elements to the end of an array", function() {
+		//...
+	});
+
+	it("returns the new length of the array", function() {
+		//...
+	});
+});
+```
+
+### WHY?
+
+There are several advantages of specs describing only one behavior:
+
+- They are easier to read and understand.
+- It's easy to pinpoint the problem when such a spec fails, even without looking at the error messages or analyzing the spec body.
+- They are easier and safer to refactor when one of system behaviors changes and fewer specs need to be changed in such a case.
+- They look better when printed out in a documentation format.
