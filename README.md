@@ -6,6 +6,7 @@
 
 * Describe intention, not implementation
 * Avoid concrete numbers or values in spec names
+* Use precise and descriptive spec names
 
 ### SPEC ORGANIZATION
 
@@ -77,3 +78,37 @@ describe("an upload bigger than free daily quota", function() {
 ### WHY?
 
 Concrete values are also, in a sense, implementation details. Hiding them makes specs less brittle (the meaning of a given value usually never changes, while the actual value may change often). It also reveals the business reason behind a given behavior, that otherwise might have been impossible to guess.
+
+- - -
+
+## Use precise and descriptive spec names
+
+Name specs so that all the conditions, actions and results are fully clear from reading the name alone, without the need to look into the spec implementation.
+
+### BAD
+
+```js
+describe("bot", function() {
+	it("correctly checks posts", function() {
+		//...
+	});
+});
+```
+
+### GOOD
+
+```js
+describe("anti-spam bot", function() {
+	it("marks all new posts containing spam as requiring verification", function() {
+		//...
+	});
+});
+```
+
+### WHY?
+
+This is symmetrical to the "Use self-explanatory fixtures" rule. You usually operate at only one of the two possible levels of abstraction at any given moment: either a spec name or a spec implementation. Each of these levels of abstraction should contain all the relevant information for this level, so you can understand what's going on without the need to jump up or down the level to check additional details.
+
+Naming all the specs this way also results in a specification that reads as a full, comprehensive documentation. Such a documentation allows to quickly understand the code base, without digging through all the implementation details and parts of it can be even discussed with business experts.
+
+Another benefit of clear and precise spec naming are clear and precise failure messages, which make pinpointing the problem easier.
