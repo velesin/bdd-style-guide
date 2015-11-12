@@ -2,10 +2,10 @@
 
 ## Table of Contents
 
+### SPEC NAMING
+
 * Describe intention, not implementation
 * Avoid concrete numbers or values in spec names
-
-### SPEC NAMING
 
 ### SPEC ORGANIZATION
 
