@@ -15,6 +15,8 @@
 
 ### MOCKING AND STUBBING
 
+- - -
+
 ## Describe intention, not implementation
 
 Avoid revealing parameters, return values, variables, methods and similar low-level implementation details in context and spec descriptions. Instead, focus on the purpose of the code under specification.
@@ -49,6 +51,8 @@ Avoiding implementation details in descriptions results in clear separation of c
 - Explicitly reveals the purpose of the code under specification, freeing reader from having to reverse-engineer it from the spec implementation.
 - Allows the reader to focus on a single concern (purpose or implementation) at a time, what makes both of them easier to reason about.
 - Makes specs' descriptions less brittle, by decoupling them from frequently changing implementation details.
+
+- - -
 
 ## Avoid concrete numbers or values in spec names
 
