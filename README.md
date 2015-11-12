@@ -12,6 +12,7 @@
 ### SPEC ORGANIZATION
 
 * Describe a single concern per spec (beware conjunctions)
+* Use nested contexts to group conceptually related specs
 
 ### SPEC IMPLEMENTATION
 
@@ -202,3 +203,47 @@ There are several advantages of specs describing only one behavior:
 - It's easy to pinpoint the problem when such a spec fails, even without looking at the error messages or analyzing the spec body.
 - They are easier and safer to refactor when one of system behaviors changes and fewer specs need to be changed in such a case.
 - They look better when printed out in a documentation format.
+
+- - -
+
+## Use nested contexts to group conceptually related specs
+
+Use nested contexts to improve readability of your specs (not to de-duplicate incidentally similar setup code). Grouping related concepts may result in extracting common setup code, but this is a side-effect, not a goal. Improving organization of your specs by using "empty" contexts, without beforeEach block, is by all means correct.
+
+### BAD
+
+```js
+describe("Comment", function() {
+	it("is displayed if it has acceptable content", function() {
+		//...
+	});
+
+	it("is not displayed if it has abusive content", function() {
+		//...
+	});
+});
+```
+
+### GOOD
+
+```js
+describe("Comment", function() {
+	describe("with acceptable content", function() {
+		it("is displayed", function() {
+			//...
+		});
+	});
+
+	describe("with abusive content", function() {
+		it("is not displayed", function() {
+			//...
+		});
+	});
+});
+```
+
+### WHY?
+
+It's easier to comprehend a nested hierarchy of short descriptions than a single, long and complex one (especially when printed out in a documentation format). In addition, nested contexts divide specs into several, clearly separated thematic blocks. This increases readability even more and makes easier to focus only on a single group of similar specs at a time.
+
+Beware of overdoing it, though. More than 2-3 levels of nesting usually hinders readability instead of improving it.
