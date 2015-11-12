@@ -1,1 +1,13 @@
-# bdd-style-guide
+# BDD Style Guide
+
+## Table of Contents
+
+### SPEC NAMING
+
+### SPEC ORGANIZATION
+
+### SPEC IMPLEMENTATION
+
+### EXPECTATIONS
+
+### MOCKING AND STUBBING
