@@ -17,6 +17,7 @@
 ### SPEC IMPLEMENTATION
 
 * Use self-explanatory fixtures (variable names and values)
+* Use minimal fixtures
 
 ### EXPECTATIONS
 
@@ -278,3 +279,38 @@ expect(unauthorizedUser).not.toBeLoggedIn();
 ### WHY?
 
 Self-explanatory fixtures allow understanding the purpose of a spec solely from its implementation, without the need to look "up", at the spec description. This helps to keep the concerns separated and enables focusing on a single level of abstraction only, what makes working with a spec easier. It also allows the spec description to focus on a high-level business purpose rather on implementation details because implementation details are already clearly self-explained.
+
+- - -
+
+## Use minimal fixtures
+
+Provide an absolute minimum of setup data necessary to verify the behavior being the subject of the spec.
+
+### BAD
+
+```js
+var user = new User({
+	name: "Wojciech", // part of the specified behavior
+	surname: "Zawistowski", // part of the specified behavior
+	emails: ["email@somedomain.com", "email@otherdomain.com"], // obligatory (required by user validation), but may contain 0-N items
+	nickname: "Some Nickname" // optional
+});
+
+expect(user).toHaveFullName("Wojciech Zawistowski");
+```
+
+### GOOD
+
+```js
+var user = new User({
+	name: "Wojciech",
+	surname: "Zawistowski",
+	emails: []
+});
+
+expect(user).toHaveFullName("Wojciech Zawistowski");
+```
+
+### WHY?
+
+Any non-essential information included in the fixture adds a noise, that makes it harder to distinguish what exactly is being specified, thus making a spec harder to understand.
