@@ -18,6 +18,7 @@
 
 * Use self-explanatory fixtures (variable names and values)
 * Use minimal fixtures
+* Hide irrelevant information (use object factories, helper methods and custom matchers)
 
 ### EXPECTATIONS
 
@@ -314,3 +315,42 @@ expect(user).toHaveFullName("Wojciech Zawistowski");
 ### WHY?
 
 Any non-essential information included in the fixture adds a noise, that makes it harder to distinguish what exactly is being specified, thus making a spec harder to understand.
+
+- - -
+
+## Hide irrelevant information (use object factories, helper methods, and custom matchers)
+
+Don't expose object construction, multi-step flows and complex object state in your specs. Hide them behind object factories, helper methods and custom matchers, tailored for the needs of a given spec and named to reveal their purpose in the context of this particular spec.
+
+### BAD
+
+```js
+var user = new User({
+	name: "Irrelevant Name",
+	address: "Some Irrelevant Address",
+	isActive: true
+});
+
+var post = new Post({
+	author: user,
+	text: "some irrelevant text"
+});
+post.publish();
+post.flagAsSpam();
+
+expect(user.status).toEqual("inactive");
+```
+
+### GOOD
+
+```js
+var user = createActiveUser(); // factory hiding irrelevant user creation details
+
+publishSpam(user); // helper method hiding irrelevant post flagging details
+
+expect(user).toBeDeactivated(); // custom matcher hiding irrelevant status implementation details
+```
+
+### WHY?
+
+Replacing multi-step or multi-parameter operations by well named, single-line methods greatly improves readability and ease of understanding of the spec. What's more, such methods can be reused across many specs, what makes specs less brittle and easier to change.
