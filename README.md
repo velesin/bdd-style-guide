@@ -16,6 +16,8 @@
 
 ### SPEC IMPLEMENTATION
 
+* Use self-explanatory fixtures (variable names and values)
+
 ### EXPECTATIONS
 
 ### MOCKING AND STUBBING
@@ -247,3 +249,32 @@ describe("Comment", function() {
 It's easier to comprehend a nested hierarchy of short descriptions than a single, long and complex one (especially when printed out in a documentation format). In addition, nested contexts divide specs into several, clearly separated thematic blocks. This increases readability even more and makes easier to focus only on a single group of similar specs at a time.
 
 Beware of overdoing it, though. More than 2-3 levels of nesting usually hinders readability instead of improving it.
+
+- - -
+
+## Use self-explanatory fixtures (variable names and values)
+
+Don't pass the values directly to the code under specification. Assign them to temporary variables named so that they reveal the purpose of the value and the context in which the value is used. In the case of string values, try to include such information also in the string text itself, where possible. Your aim should be to make the spec purpose clear even when reading only the spec implementation, without the description.
+
+### BAD
+
+```js
+var user = User.logIn("qwerty", "abcdefgh");
+
+expect(user).not.toBeLoggedIn();
+```
+
+### GOOD
+
+```js
+var validLogin = "valid_username";
+var invalidPassword = "pw_without_at_least_one_digit";
+
+var unauthorizedUser = User.logIn(validLogin, invalidPassword);
+
+expect(unauthorizedUser).not.toBeLoggedIn();
+```
+
+### WHY?
+
+Self-explanatory fixtures allow understanding the purpose of a spec solely from its implementation, without the need to look "up", at the spec description. This helps to keep the concerns separated and enables focusing on a single level of abstraction only, what makes working with a spec easier. It also allows the spec description to focus on a high-level business purpose rather on implementation details because implementation details are already clearly self-explained.
